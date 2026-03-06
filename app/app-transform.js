@@ -5,7 +5,7 @@ var lispCode = `
 (console.log 123)
 #|@
 var xyz = "XYZ";
-(console.log <string>xyz={{xyz}}<string>)
+console.log(<string>xyz={{xyz}}<string>)
 |#
 `;
 var jsCode = await async_transformCode(lispCode);
