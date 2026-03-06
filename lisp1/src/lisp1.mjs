@@ -8,10 +8,6 @@ import jsBeautify from "npm:js-beautify@1.15.4";
 
 const common = new OMLCommon();
 
-// export function version() {
-//   return "xp-lisp: version 2026.0305.220416";
-// }
-
 function compile_number(ast) {
   return compile_ast(ast);
 }
@@ -519,6 +515,7 @@ function compile_do(ast) {
   return compile_ast(new_ast);
 }
 
+// deno-lint-ignore no-unused-vars
 export function lisp1($scope, $system) {
   //if (!$scope) $scope = globalThis;
   if (!$scope) $scope = {};
@@ -587,11 +584,13 @@ export function lisp1($scope, $system) {
             output = Object.prototype.toString.call(val) + " " +
               JSON.stringify(val);
           } catch (_e) {
+            // ignore
           }
         } else {
           try {
             output = JSON.stringify(val);
           } catch (_e) {
+            // ignore
           }
         }
         const tm2 = new Date().getTime();
