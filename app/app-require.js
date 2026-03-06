@@ -1,4 +1,4 @@
-const sys = require('lisp1');
+const sys = require('@javacommons/lisp1');
 
 (async () => {
   console.log(sys.version());

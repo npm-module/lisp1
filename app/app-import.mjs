@@ -1,4 +1,4 @@
-import * as sys from "lisp1";
+import * as sys from "@javacommons/lisp1";
 console.log(sys.version());
 console.log(sys.cwd());
 console.log(sys.exists("c:/Windows/notepad.exe"));

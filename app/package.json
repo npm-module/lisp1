@@ -3,6 +3,6 @@
   "version": "1.0.0",
   "license": "MIT",
   "dependencies": {
-    "lisp1": "file:../npm-module"
+    "@javacommons/lisp1": "file:../npm-module"
   }
 }

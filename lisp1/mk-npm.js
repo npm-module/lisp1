@@ -9,7 +9,7 @@ await build({
         deno: true,
     },
     package: {
-        name: "lisp1",
+        name: "@javacommons/lisp1",
         version: Deno.args[0],
         description: "String function that returns where the cow says Hello nus3",
         license: "MIT",

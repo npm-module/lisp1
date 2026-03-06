@@ -60,7 +60,7 @@ export class system {
 }
 
 export function version() {
-  return "lisp1: version 2026.0306.222430";
+  return "@javacommons/lisp1: version 2026.0306.223257";
 }
 
 export function args() {
