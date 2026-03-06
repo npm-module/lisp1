@@ -1,10 +1,11 @@
 #! /usr/bin/env -S deno -A
-import { lisp, system as sys } from "../npm-module/esm/mod.js";
+import { lisp, system as sys, async_prettier } from "../npm-module/esm/mod.js";
 
 console.log(sys.version());
+console.log(sys.versionNumber());
 console.log(sys.cwd());
 console.log(sys.exists("c:/Windows/notepad.exe"));
-await sys.run(["ls", "-ltr"]);
+await sys.async_run(["ls", "-ltr"]);
 console.log(sys.args());
 
 function add2(a, b) { return a + b; }
@@ -20,3 +21,9 @@ scope2.run(`
 (console.log ($system.args))
 (console.log ($scope.add2 111 222))
 `);
+
+var js = `
+function add2 (a,b){return a+b}
+`;
+
+console.log(await async_prettier(js));

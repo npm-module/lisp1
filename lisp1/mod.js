@@ -1,13 +1,42 @@
 import { existsSync } from "@std/fs";
+import prettier from "npm:prettier@3.8.1";
 import { lisp1 } from "./src/lisp1.mjs";
 
 export function lisp($scope) {
   return lisp1($scope, system);
 }
 
+export async function async_prettier(code) {
+  const formatted = await prettier.format(code, {
+    parser: "babel",
+    semi: true,
+    singleQuote: false,
+  });
+  return formatted;
+}
+
+export async function async_transformCode(lispCode) {
+  const lisp = lisp1({}, system);
+  const rawJS = lisp.compile(lispCode).trim();
+  const jscode = `
+  import { lisp } from "npm:open-lisp@${versionNumber()}";
+  export default function(\$scope) {
+    const $_scope_$ = lisp($scope);
+    $_scope_$.evalJS(\`${
+    rawJS.replace(/[$][{]/g, "\\${").replace(/`/g, "\\`")
+  }\`);
+    return $_scope_$;
+  }`;
+  const beautified = await async_prettier(jscode);
+  return beautified;
+}
+
 export class system {
   static version() {
     return version();
+  }
+  static versionNumber() {
+    return versionNumber();
   }
   static lisp() {
     return lisp(...arguments);
@@ -15,8 +44,8 @@ export class system {
   static args() {
     return args();
   }
-  static env() {
-    return env();
+  static allEnv() {
+    return allEnv();
   }
   static getEnv() {
     return getEnv(...arguments);
@@ -45,11 +74,11 @@ export class system {
   static remove(path) {
     return remove(path);
   }
-  static run(v, ignoreErrors) {
-    return run(v, ignoreErrors);
+  static async_run(v, ignoreErrors) {
+    return async_run(v, ignoreErrors);
   }
-  static runWithOutput(v, ignoreErrors, encoding) {
-    return runWithOutput(v, ignoreErrors, encoding);
+  static async_runWithOutput(v, ignoreErrors, encoding) {
+    return async_runWithOutput(v, ignoreErrors, encoding);
   }
   static loadText(path) {
     return loadText(path);
@@ -60,14 +89,19 @@ export class system {
 }
 
 export function version() {
-  return "open-lisp: version 2026.0306.224346";
+  return "npm:open-lisp: version 2026.307.72853";
+}
+
+export function versionNumber() {
+  const split = version().split(" ");
+  return split[2];
 }
 
 export function args() {
   return Deno.args;
 }
 
-export function env() {
+export function allEnv() {
   return Deno.env.toObject();
 }
 
@@ -111,7 +145,7 @@ export function remove(path) {
   return Deno.removeSync(path, { recursive: true });
 }
 
-export async function run(v, ignoreErrors) {
+export async function async_run(v, ignoreErrors) {
   // deno-lint-ignore no-deprecated-deno-api
   const p = Deno.run({
     cmd: v,
@@ -127,7 +161,7 @@ export async function run(v, ignoreErrors) {
   return result;
 }
 
-export async function runWithOutput(
+export async function async_runWithOutput(
   v,
   ignoreErrors,
   encoding,

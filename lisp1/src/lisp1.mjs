@@ -517,8 +517,10 @@ function compile_do(ast) {
 
 // deno-lint-ignore no-unused-vars
 export function lisp1($scope, $system) {
-  //if (!$scope) $scope = globalThis;
   if (!$scope) $scope = {};
+  $scope.evalJS = (code) => {
+    return eval(code);
+  };
   $scope.compile_ast = (ast, debug) => {
     if (debug) {
       console.log(" [AST] " + JSON.stringify(ast));
@@ -640,15 +642,20 @@ export function lisp1($scope, $system) {
   $scope.runAll = (exp) => {
     return $scope.execAll(exp, true);
   };
+  $scope.execFile = (path, debug) => {
+    const text = Deno.readTextFileSync(path);
+    return $scope.execAll(text, debug);
+  };
+  $scope.runFile = (path) => {
+    return $scope.execFile(path, true);
+  };
+  $scope.async_execURL = async (url, debug) => {
+    const res = await fetch(url);
+    const text = await res.text();
+    return $scope.execAll(text, debug);
+  };
+  $scope.async_runURL = async (url) => {
+    return await $scope.async_execURL(url, true);
+  };
   return $scope;
-}
-
-export function run(exp) {
-  const o = xpLisp(globalThis);
-  return o.run(exp);
-}
-
-export function runAll(exp) {
-  const o = xpLisp(globalThis);
-  return o.runAll(exp);
 }

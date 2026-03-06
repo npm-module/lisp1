@@ -6,7 +6,7 @@ Deno.test("test#01", async () => {
     console.log(sys.cwd());
     sys.mkdir("./tmp/abc/xyz");
     sys.saveText("./tmp/abc/xyz.txt", "helloハロー©");
-    await sys.run(["ls", "-l", "./tmp/abc"]);
+    await sys.async_run(["ls", "-l", "./tmp/abc"]);
     assert(sys.loadText("./tmp/abc/xyz.txt") == "helloハロー©");
   } finally {
     sys.remove("./tmp");
