@@ -15,7 +15,7 @@ export async function async_prettier(code) {
   return formatted;
 }
 
-export async function async_transformCode(lispCode) {
+export async function async_transformCode(lispCode, _pathToLispCode) {
   const lisp = lisp1({}, system);
   const rawJS = lisp.compile(lispCode).trim();
   const jscode = `
@@ -28,6 +28,14 @@ export async function async_transformCode(lispCode) {
     return $_scope_$;
   }`;
   const beautified = await async_prettier(jscode);
+  if (_pathToLispCode) {
+    //console.log(`[open-lisp] Transformed ${_pathToLispCode} to JavaScript:\n${beautified}`);
+    saveText(_pathToLispCode, beautified);
+    console.log(`<SCRIPT>\n${beautified.trimEnd()}\n</SCRIPT>`);
+    console.log(
+      `[open-lisp] Transformed your code and saved to the ${_pathToLispCode}.`,
+    );
+  }
   return beautified;
 }
 
@@ -89,7 +97,7 @@ export class system {
 }
 
 export function version() {
-  return "npm:open-lisp: version 2026.307.72853";
+  return "npm:open-lisp: version 2026.307.75218";
 }
 
 export function versionNumber() {
