@@ -1,6 +1,7 @@
-import { xpLisp } from "./src/xp-lisp.mjs";
+#! /usr/bin/env -S deno -A
+import { lisp1 } from "./src/lisp1.mjs";
 
-const glob = xpLisp();
+const glob = lisp1(globalThis);
 glob.run(`
 #lang lisp
 # 行コメント(1)
