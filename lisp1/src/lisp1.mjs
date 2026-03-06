@@ -8,9 +8,9 @@ import jsBeautify from "npm:js-beautify@1.15.4";
 
 const common = new OMLCommon();
 
-export function version() {
-  return "xp-lisp: version 2026.0305.220416";
-}
+// export function version() {
+//   return "xp-lisp: version 2026.0305.220416";
+// }
 
 function compile_number(ast) {
   return compile_ast(ast);
@@ -85,7 +85,12 @@ function compile_ast(ast) {
     return common.to_id(ast);
   }
   if (common.is_script(ast)) {
-    return ast[1];
+    let script = ast[1];
+    script = script.replace(/<string>/g, "`");
+    script = script.replace(/<[/]string>/g, "`");
+    script = script.replace(/({{)/g, "${");
+    script = script.replace(/(}})/g, "}");
+    return script;
   }
   if (common.is_template(ast)) {
     let template = ast[1];

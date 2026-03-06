@@ -60,7 +60,7 @@ export class system {
 }
 
 export function version() {
-  return "lisp1: version 2026.0306.214909";
+  return "lisp1: version 2026.0306.221131";
 }
 
 export function args() {

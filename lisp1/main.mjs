@@ -2,9 +2,9 @@
 import { lisp, system } from "./mod.js";
 
 console.log(system.version());
-let cwd = system.cwd();
+const cwd = system.cwd();
 console.log(cwd);
-let home = Deno.env.get("HOME");
+const home = Deno.env.get("HOME");
 console.log(home);
 
 await system.run(["bash", "-c", "ls -l"]);
@@ -26,7 +26,7 @@ xyz();
 console.log("XXX");
 var cwd = $system.cwd();
 console.log(cwd);
-Deno.exit(0);
+console.log(<string>[cwd]={{cwd}}</string>);
 |#
 (console.log $@answerA={{11+22}}@)
 (console.log ("$@" "answerB={{110+220}}"))
@@ -44,9 +44,7 @@ def")
 (console.log ("@" "777+888"))
 (console.log #|@ 1111+2222 |#)
 (console.log @
-1111
-+
-2222
+<string>[1111+2222]=>{{1111+2222}}</string>
 @)
 (console.log "str")
 (console.log "ハロー©")
