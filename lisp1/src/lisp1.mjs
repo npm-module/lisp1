@@ -523,11 +523,11 @@ export function lisp1($scope, $system) {
   };
   $scope.compile_ast = (ast, debug) => {
     if (debug) {
-      console.log(" [AST] " + JSON.stringify(ast));
+      console.error(" [AST] " + JSON.stringify(ast));
     }
     const code = compile_ast(ast);
     if (debug) {
-      console.log("<SCRIPT>\n" + jsBeautify(code) + "\n</SCRIPT>");
+      console.error("<SCRIPT>\n" + jsBeautify(code) + "\n</SCRIPT>");
     }
     return code;
   };
@@ -538,14 +538,14 @@ export function lisp1($scope, $system) {
       const exp = step[0];
       const ast = step[1];
       if (debug) {
-        console.log("[LISP] " + exp);
+        console.error("[LISP] " + exp);
       }
       if (debug) {
-        console.log(" [AST] " + JSON.stringify(ast));
+        console.error(" [AST] " + JSON.stringify(ast));
       }
       const code = compile_ast(ast);
       if (debug) {
-        console.log("<SCRIPT>\n" + jsBeautify(code) + "\n</SCRIPT>");
+        console.error("<SCRIPT>\n" + jsBeautify(code) + "\n</SCRIPT>");
       }
       result += code + ";\n";
     }
@@ -563,14 +563,14 @@ export function lisp1($scope, $system) {
       const ast = step[1];
       try {
         if (debug) {
-          console.log("[LISP] " + exp);
+          console.error("[LISP] " + exp);
         }
         if (debug) {
-          console.log(" [AST] " + JSON.stringify(ast));
+          console.error(" [AST] " + JSON.stringify(ast));
         }
         text = compile_ast(ast);
         if (debug) {
-          console.log("<SCRIPT>\n" + jsBeautify(text) + "\n</SCRIPT>");
+          console.error("<SCRIPT>\n" + jsBeautify(text) + "\n</SCRIPT>");
         }
         const val = eval(text);
         last = val;
@@ -598,27 +598,27 @@ export function lisp1($scope, $system) {
         const tm2 = new Date().getTime();
         if (debug) {
           if (output === undefined) {
-            console.log("==> (" + (tm2 - tm1) + " ms)");
-            console.log(val);
+            console.error("==> (" + (tm2 - tm1) + " ms)");
+            console.error(val);
           } else {
-            console.log("==> " + output + " (" + (tm2 - tm1) + " ms)");
+            console.error("==> " + output + " (" + (tm2 - tm1) + " ms)");
           }
         }
       } catch (e) {
         if (!debug) {
-          console.log("[LISP] " + exp);
+          console.error("[LISP] " + exp);
         }
         if (!debug) {
-          console.log(" [AST] " + JSON.stringify(ast));
+          console.error(" [AST] " + JSON.stringify(ast));
         }
         if (!debug) {
-          console.log("<SCRIPT>\n" + jsBeautify(text) + "\n</SCRIPT>");
+          console.error("<SCRIPT>\n" + jsBeautify(text) + "\n</SCRIPT>");
         }
-        console.log("[EXCEPTION]");
+        console.error("[EXCEPTION]");
         if (e.stack) {
-          console.log(e.stack);
+          console.error(e.stack);
         } else {
-          console.log(e);
+          console.error(e);
         }
         throw e;
       }
@@ -632,9 +632,9 @@ export function lisp1($scope, $system) {
       return eval(text);
     } catch (e) {
       if (e.stack) {
-        console.log(e.stack);
+        console.error(e.stack);
       } else {
-        console.log(e);
+        console.error(e);
       }
       throw e;
     }

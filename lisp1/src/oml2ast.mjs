@@ -1,11 +1,9 @@
 function tokenize(str) {
-  //console.debug("tokenize", str);
   const re =
     /[\s,]*([()\[\]{}'`]|"(?:\\.|[^\\"])*"|[$]?@(?:@@|[^@])*@|;.*|#[!# ].*|#lang[ ]+.*|#[\|][\s\S]+?[\|]#|#[a-z]+|[^\s,()\[\]{}'"`;@]*)/g;
   const result = [];
   let token;
   while ((token = re.exec(str)[1]) !== "") {
-    //console.debug(`token=${token}`);
     if (token[0] === ";") continue;
     if (token.startsWith("#!")) continue;
     if (token.startsWith("##")) continue;
@@ -107,7 +105,6 @@ function read_sexp(code, exp) {
         token = token.trim();
         return ["@", token];
       }
-      // not a "#|@" quoted string – handle as in the default branch
       if (token[0] === ":") return token;
       if (token[0] === "&") return token;
       const ids = token[0] === "." ? [token] : token.split(".");
@@ -119,10 +116,7 @@ function read_sexp(code, exp) {
       token = token.replace(/(@@)/g, "@");
       return ["$@", token];
     default: {
-      //if (token[0] === ":") return token;
-      //if (token[0] === "&") return token;
       if (!token.match(/^[_a-zA-Z][._a-zA-Z0-9]*$/)) {
-        //console.debug(`token=${token} does not match the identifier pattern`);
         return ["#", token];
       }
       const ids = token[0] === "." ? [token] : token.split(".");

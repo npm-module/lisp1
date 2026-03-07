@@ -33,8 +33,8 @@ export async function async_transformCode(lispCode, _pathToLispCode) {
   const beautified = await async_prettier(jscode);
   if (_pathToLispCode) {
     saveText(_pathToLispCode, beautified);
-    console.log(`<SCRIPT>\n${beautified.trimEnd()}\n</SCRIPT>`);
-    console.log(
+    console.error(`<SCRIPT>\n${beautified.trimEnd()}\n</SCRIPT>`);
+    console.error(
       `[open-lisp] Transformed your code and saved to ${_pathToLispCode}.`,
     );
   }
@@ -99,7 +99,7 @@ export class system {
 }
 
 export function version() {
-  return "npm:open-lisp: version 2026.307.95048";
+  return "npm:open-lisp: version 2026.307.113357";
 }
 
 export function versionNumber() {
@@ -162,7 +162,7 @@ export async function async_run(v, ignoreErrors) {
   });
   const { success, code } = await p.status();
   if (!ignoreErrors && code !== 0) {
-    console.log(JSON.stringify(v) + " exit code is " + code);
+    console.error(JSON.stringify(v) + " exit code is " + code);
     throw new Error();
   }
   const result = {};
@@ -186,7 +186,7 @@ export async function async_runWithOutput(
   const { success, code } = await p.status();
   const result = {};
   if (!ignoreErrors && code !== 0) {
-    console.log(JSON.stringify(v) + " exit code is " + code);
+    console.error(JSON.stringify(v) + " exit code is " + code);
     throw new Error();
   }
   result.success = success;
