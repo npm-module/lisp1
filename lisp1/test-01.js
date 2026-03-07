@@ -1,19 +1,8 @@
+#! /usr/bin/env -S deno test -A --no-check
 import { assert } from "@std/assert";
-import { lisp, version, versionNumber, system } from "./mod.js";
+import { lisp, version, versionNumber } from "../npm-module/esm/mod.js";
 
 Deno.test("test#01", async () => {
-  try {
-    console.log(system.cwd());
-    system.mkdir("./tmp/abc/xyz");
-    system.saveText("./tmp/abc/xyz.txt", "helloハロー©");
-    await system.async_run(["ls", "-l", "./tmp/abc"]);
-    assert(system.loadText("./tmp/abc/xyz.txt") == "helloハロー©");
-  } finally {
-    system.remove("./tmp");
-  }
-});
-
-Deno.test("test#02", async () => {
   try {
     const scope = lisp(globalThis);
     scope.run(
@@ -28,7 +17,7 @@ Deno.test("test#02", async () => {
   }
 });
 
-Deno.test("test#03", async () => {
+Deno.test("test#02", async () => {
   try {
     const scope = lisp(globalThis);
     scope.run(

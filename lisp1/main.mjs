@@ -4,14 +4,14 @@ import { lisp, system } from "./mod.js";
 console.log(system.version());
 const cwd = system.cwd();
 console.log(cwd);
-const home = Deno.env.get("HOME");
+const home = system.getEnv("HOME");
 console.log(home);
 
-await system.async_run(["bash", "-c", "ls -l"]);
-await system.async_run(["scoop", "install", "yt-dlp"]);
-await system.async_run(["scoop", "uninstall", "yt-dlp"]);
-await system.async_run(["scoop", "install", "yt-dlp"]);
-await system.async_run(["bash", cwd + "/z.sh"]);
+// await system.async_run(["bash", "-c", "ls -l"]);
+// await system.async_run(["scoop", "install", "yt-dlp"]);
+// await system.async_run(["scoop", "uninstall", "yt-dlp"]);
+// await system.async_run(["scoop", "install", "yt-dlp"]);
+// await system.async_run(["bash", cwd + "/z.sh"]);
 
 const glob = lisp();
 glob.run(`

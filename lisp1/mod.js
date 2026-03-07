@@ -2,8 +2,11 @@ import { existsSync } from "@std/fs";
 import prettier from "npm:prettier@3.8.1";
 import { lisp1 } from "./src/lisp1.mjs";
 
-export function lisp($scope) {
-  return lisp1($scope, system);
+export function lisp($scope, $system) {
+  if (typeof $system === 'undefined') {
+    $system = system;
+  }
+  return lisp1($scope, $system);
 }
 
 export async function async_prettier(code) {
@@ -99,7 +102,7 @@ export class system {
 }
 
 export function version() {
-  return "npm:open-lisp: version 2026.307.151604";
+  return "npm:open-lisp: version 2026.307.183416";
 }
 
 export function versionNumber() {
